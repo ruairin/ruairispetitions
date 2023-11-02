@@ -34,18 +34,15 @@ public class PetitionsController {
         return "showAllPetitions";
     }
 
-
     @GetMapping("/view/{id}")
     public String viewOne(@PathVariable("id") Integer id, Model model) {
 
-            Petition petition =  
-                this.repository
-                    .findById(id)
-                    .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found")
-                    );
-            model.addAttribute("petition", petition);
-            return "viewOne";
+        Petition petition = this.repository
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found"));
+        model.addAttribute("petition", petition);
+        return "viewOne";
     }
 
     @GetMapping("/create")
@@ -79,19 +76,25 @@ public class PetitionsController {
         return "search";
     }
 
-    @GetMapping("/doSearch")
-    public String doSearch(
-            @RequestParam(value = "searchString", required = false) String searchString,
+    @GetMapping("/sign")
+    public String sign(
+            @RequestParam(value = "id", required = true) Integer id,
+            @RequestParam(value = "email", required = true) String email,
+            @RequestParam(value = "name", required = true) String name,
             Model model) {
 
-        if (searchString.isEmpty() || searchString == null) {
-            model.addAttribute("error", "A search term was not provided");
+        if (email.isEmpty() || email == null ||
+                name.isEmpty() || name == null) {
+            model.addAttribute("error", "Name and email are required to sign");
             return "error";
         }
 
-        List<Petition> results = repository.findAllByTitleIgnoreCaseContains(searchString);
-        model.addAttribute("results", results);
+        Petition petition = this.repository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found"));
+        petition.appendSignatures(name + " (" + email + ")");
+        repository.save(petition);
 
-        return "searchResults";
+        return "redirect:/view/" + id;
     }
 }

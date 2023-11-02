@@ -73,5 +73,9 @@ public class Petition {
         this.signatures = signatures;
     }
 
+    public void appendSignatures(String signatures) {
+        this.signatures = this.signatures + ", " + signatures;
+    }
+
 
 }

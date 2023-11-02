@@ -18,6 +18,19 @@
             <td th:text="${petition.signatures}" />
         </tr>
     </table>
+    <form action='#' th:action="@{/sign}">
+        <p>Sign this petition</p>
+        <label>Name:</label>
+        <input type="text" th:name="name"/>
+        <br>
+        <label>Email:</label>
+        <input type="text" th:name="email"/>
+        <br>
+        <input type="hidden" th:name="id" th:field="${petition.id}"/>
+        <br>
+        <button type="submit">Go</button>
+
+    </form>
 </body>
 
 </html>
