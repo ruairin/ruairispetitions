@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Search Petition</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <h1>Search Petition</h1>
+
+    <form id='search' action='#' th:action="@{/doSearch}">
+
+        <input type="text" th:name="searchString"/>
+        <button type="submit">Go</button>
+
+    </form>
+</body>
+
+</html>

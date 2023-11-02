@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Search results</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <h1>Search results</h1>
+    <p>The following results were found</p>
+    <p>Return to the <a href="/">main page</a></p>
+    <table>
+        <tr th:each="result: ${results}">
+            <td th:text="${result.title}"/>
+            <td th:text="${result.description}"/>
+            <td th:text="${result.date}"/>
+            <td th:text="${result.signatures}"/>
+        </tr>
+    </table>
+</body>
+
+</html>
