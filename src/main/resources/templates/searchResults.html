@@ -12,10 +12,15 @@
     <p>Return to the <a href="/">main page</a></p>
     <table>
         <tr th:each="result: ${results}">
-            <td th:text="${result.title}"/>
-            <td th:text="${result.description}"/>
-            <td th:text="${result.date}"/>
-            <td th:text="${result.signatures}"/>
+            <td th:text="${result.title}" />
+            <td th:text="${result.description}" />
+            <td th:text="${result.date}" />
+            <td th:text="${result.signatures}" />
+            <td>
+                <a th:href="@{/view/{id}(id=${result.id})}">
+                    View Petition
+                </a>
+            </td>
         </tr>
     </table>
 </body>

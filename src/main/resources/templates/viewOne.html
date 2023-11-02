@@ -7,20 +7,15 @@
 </head>
 
 <body>
-    <h1>Show all petitions</h1>
-    <p>This page shows all petitions in the system</p>
+    <h1>View and Sign Petition</h1>
+    <p>This page shows the selected petition</p>
     <p>Return to the <a href="/">main page</a></p>
     <table>
-        <tr th:each="petition: ${petitions}">
+        <tr>
             <td th:text="${petition.title}" />
             <td th:text="${petition.description}" />
             <td th:text="${petition.date}" />
             <td th:text="${petition.signatures}" />
-            <td>
-                <a th:href="@{/view/{id}(id=${petition.id})}">
-                    View Petition
-                </a>
-            </td>
         </tr>
     </table>
 </body>
