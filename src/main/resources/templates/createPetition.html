@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Create Petition</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <h1>Create Petition</h1>
+
+    <form id='createPetition' action='#' th:action="@{/createPetition}" th:object="${petition}" th:method="POST">
+
+        <input type="text" th:field="*{title}" placeholder="Petition Title" />
+        <input type="text" th:field="*{description}" placeholder="Petition description" />
+        <button type="submit">Save Petition</button>
+
+    </form>
+</body>
+
+</html>
