@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh 'docker build -f Dockerfile -t ruairispetitions .'
                 sh 'docker rm -f "ruairispetitions_container" || true'
-                sh 'docker run --name ruairispetitions_container -p 9090:8080 ruairispetitions --detach ruairispetitions:latest
+                sh 'docker run --name ruairispetitions_container -p 9090:8080 ruairispetitions --detach ruairispetitions:latest'
             }
         }
     }
