@@ -76,6 +76,22 @@ public class PetitionsController {
         return "search";
     }
 
+    @GetMapping("/doSearch")
+    public String doSearch(
+            @RequestParam(value = "searchString", required = false) String searchString,
+            Model model) {
+
+        if (searchString.isEmpty() || searchString == null) {
+            model.addAttribute("error", "A search term was not provided");
+            return "error";
+        }
+
+        List<Petition> results = repository.findAllByTitleIgnoreCaseContains(searchString);
+        model.addAttribute("results", results);
+
+        return "searchResults";
+    }
+
     @GetMapping("/sign")
     public String sign(
             @RequestParam(value = "id", required = true) Integer id,
