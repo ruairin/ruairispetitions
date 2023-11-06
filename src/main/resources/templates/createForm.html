@@ -9,7 +9,7 @@
 <body>
     <h1>Create Petition</h1>
 
-    <form id='createPetition' action='#' th:action="@{/createPetition}" th:object="${petition}" th:method="POST">
+    <form id='createPetition' action='#' th:action="@{/create}" th:object="${petition}" th:method="POST">
 
         <input type="text" th:field="*{title}" placeholder="Petition Title" />
         <input type="text" th:field="*{description}" placeholder="Petition description" />

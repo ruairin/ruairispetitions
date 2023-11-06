@@ -31,7 +31,7 @@ public class PetitionsController {
     @GetMapping("/viewAll")
     public String viewAll(Model model) {
         model.addAttribute("petitions", this.repository.findAll());
-        return "showAllPetitions";
+        return "viewAll";
     }
 
     @GetMapping("/view/{id}")
@@ -49,11 +49,11 @@ public class PetitionsController {
     public String create(Model model) {
         Petition petition = new Petition();
         model.addAttribute("petition", petition);
-        return "createPetition";
+        return "createForm";
     }
 
-    @PostMapping("/createPetition")
-    public String createPetition(@ModelAttribute("petition") Petition petition, Model model) {
+    @PostMapping("/create")
+    public String create(@ModelAttribute("petition") Petition petition, Model model) {
 
         // Check for blank title/description
         if (petition.getTitle() == null || petition.getTitle().isEmpty()
@@ -68,12 +68,12 @@ public class PetitionsController {
 
         repository.save(petition);
 
-        return "petitionCreated";
+        return "createSuccess";
     }
 
     @GetMapping("/search")
     public String search(Model model) {
-        return "search";
+        return "searchForm";
     }
 
     @GetMapping("/doSearch")
