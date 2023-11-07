@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        booleanParam(name: 'DEPLOY', description: 'Deploy application?')
+    }
     stages {
         stage ('clone') {
             steps {
@@ -24,6 +27,9 @@ pipeline {
           }
         }
         stage ('deploy') {
+            when {
+                expression { params.DEPLOY }
+            }
             steps {
                 sh 'docker build -f Dockerfile -t ruairispetitions .'
                 sh 'docker rm -f "ruairispetitions_container" || true'
