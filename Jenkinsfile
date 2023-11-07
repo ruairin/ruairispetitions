@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    parameters {
-        booleanParam(name: 'DEPLOY', description: 'Deploy application?')
-    }
+    // parameters {
+    //     booleanParam(name: 'DEPLOY', description: 'Deploy application?')
+    // }
     stages {
         stage ('clone') {
             steps {
@@ -27,9 +27,11 @@ pipeline {
           }
         }
         stage ('deploy') {
-            when {
-                expression { params.DEPLOY }
-            }
+              timeout(time: 15, unit: "MINUTES") {
+                  input message: 'Do you want to approve the deployment?', ok: 'Yes'
+              }
+  
+              echo "Initiating deployment"
             steps {
                 sh 'docker build -f Dockerfile -t ruairispetitions .'
                 sh 'docker rm -f "ruairispetitions_container" || true'
