@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    // parameters {
-    //     booleanParam(name: 'DEPLOY', description: 'Deploy application?')
-    // }
+
     stages {
         stage ('clone') {
             steps {
@@ -26,29 +24,20 @@ pipeline {
             sh 'mvn package'
           }
         }
-        stage ('getApproval')
-        {
+        stage ('deploy') {
           input {
             message "Deploy application?"
             parameters {
               booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Deploy application?')
             }
           }
-          // steps{
-          //   script {
-          //       env.DEPLOY = input message: 'Deploy application?', 
-          //               parameters: [booleanParam(name: 'DEPLOY', description: 'Deploy application?')]
-          //   }
-          // }
-        }
-        stage ('deploy') {
           when {
-              expression { ${DEPLOY} == true }
+            expression { DEPLOY.toBoolean() }
           }
           steps {
-              sh 'docker build -f Dockerfile -t ruairispetitions .'
-              sh 'docker rm -f "ruairispetitions_container" || true'
-              sh 'docker run --name ruairispetitions_container -p 9090:8080 --detach ruairispetitions:latest'
+            sh 'docker build -f Dockerfile -t ruairispetitions .'
+            sh 'docker rm -f "ruairispetitions_container" || true'
+            sh 'docker run --name ruairispetitions_container -p 9090:8080 --detach ruairispetitions:latest'
           }
         }
     }
