@@ -25,6 +25,9 @@ pipeline {
           }
         }
         stage ('deploy') {
+          options{
+            timeout(time: 5, unit: 'MINUTES')                
+          }
           input {
             message "Deploy application?"
             parameters {
