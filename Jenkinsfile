@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    parameters {
-        booleanParam(name: 'DEPLOY', description: 'Deploy application?')
-    }
+    // parameters {
+    //     booleanParam(name: 'DEPLOY', description: 'Deploy application?')
+    // }
     stages {
         stage ('clone') {
             steps {
@@ -27,8 +27,12 @@ pipeline {
           }
         }
         stage ('deploy') {
+            script {
+                env.DEPLOY = input message: 'User input required', ok: 'Deploy!',
+                        parameters: [booleanParam(name: 'DEPLOY', description: 'Deploy application?')]
+            }
             when {
-                expression { params.DEPLOY }
+                expression { env.DEPLOY }
             }
             steps {
                 sh 'docker build -f Dockerfile -t ruairispetitions .'
