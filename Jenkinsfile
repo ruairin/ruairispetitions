@@ -28,16 +28,22 @@ pipeline {
         }
         stage ('getApproval')
         {
-          steps{
-            script {
-                env.DEPLOY = input message: 'Deploy application?', 
-                        parameters: [booleanParam(name: 'DEPLOY', description: 'Deploy application?')]
+          input {
+            message "Deploy application?"
+            parameters {
+              booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Deploy application?')
             }
           }
+          // steps{
+          //   script {
+          //       env.DEPLOY = input message: 'Deploy application?', 
+          //               parameters: [booleanParam(name: 'DEPLOY', description: 'Deploy application?')]
+          //   }
+          // }
         }
         stage ('deploy') {
           when {
-              expression { env.DEPLOY.toBoolean() }
+              expression { ${DEPLOY} == true }
           }
           steps {
               sh 'docker build -f Dockerfile -t ruairispetitions .'
