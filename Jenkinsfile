@@ -26,19 +26,24 @@ pipeline {
             sh 'mvn package'
           }
         }
-        stage ('deploy') {
+        stage ('getApproval')
+        {
+          steps{
             script {
-                env.DEPLOY = input message: 'User input required', ok: 'Deploy!',
+                env.DEPLOY = input message: 'Deploy application?', 
                         parameters: [booleanParam(name: 'DEPLOY', description: 'Deploy application?')]
             }
-            when {
-                expression { env.DEPLOY }
-            }
-            steps {
-                sh 'docker build -f Dockerfile -t ruairispetitions .'
-                sh 'docker rm -f "ruairispetitions_container" || true'
-                sh 'docker run --name ruairispetitions_container -p 9090:8080 --detach ruairispetitions:latest'
-            }
+          }
+        }
+        stage ('deploy') {
+          when {
+              expression { env.DEPLOY.toBoolean() }
+          }
+          steps {
+              sh 'docker build -f Dockerfile -t ruairispetitions .'
+              sh 'docker rm -f "ruairispetitions_container" || true'
+              sh 'docker run --name ruairispetitions_container -p 9090:8080 --detach ruairispetitions:latest'
+          }
         }
     }
     post {
