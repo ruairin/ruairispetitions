@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -124,6 +125,7 @@ class RuairispetitionsApplicationTests {
 		this.mockMvc
 			.perform(get("/doSearch")
 				.param("searchString", "Petition"))
+			.andExpect(status().isOk())
 			.andExpect(model().attributeExists("results"))
 			.andExpect(view().name("searchResults"));
 	}
@@ -133,6 +135,36 @@ class RuairispetitionsApplicationTests {
 		this.mockMvc
 			.perform(get("/doSearch")
 				.param("searchString", ""))
+			.andExpect(status().isBadRequest())
+			.andExpect(model().attributeExists("error"))
+			.andExpect(view().name("error"));
+	}
+
+	// ============ Tests for sign feature ===============
+	@Test
+	void shouldSignPetition() throws Exception {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+		Optional<Petition> petition = Optional.of(new Petition(1, "Petition 1", "Description 1", now.format(formatter), "John Joe"));
+		Mockito.when(petitionRepository.findById(1)).thenReturn(petition);
+
+		this.mockMvc
+			.perform(get("/sign")
+				.param("id", "1")
+				.param("email", "test@domain.com")
+				.param("name", "Ted"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(header().string("Location", "/view/1"));
+	}
+
+	@Test
+	void shouldFailToSignPetition() throws Exception {
+		this.mockMvc
+			.perform(get("/sign")
+				.param("id", "1")
+				.param("email", "test@domain.com")
+				.param("name", ""))
+			.andExpect(status().isBadRequest())
 			.andExpect(model().attributeExists("error"))
 			.andExpect(view().name("error"));
 	}
