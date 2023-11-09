@@ -110,4 +110,31 @@ class RuairispetitionsApplicationTests {
 			.andExpect(view().name("error"));
 	}
 
-}
+	// ============ Tests for search feature ===============
+	@Test
+	void shouldGetSearchPage() throws Exception {
+		this.mockMvc
+				.perform(get("/search"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("searchForm"));
+	}
+
+	@Test
+	void shouldGetSearchResults() throws Exception {
+		this.mockMvc
+			.perform(get("/doSearch")
+				.param("searchString", "Petition"))
+			.andExpect(model().attributeExists("results"))
+			.andExpect(view().name("searchResults"));
+	}
+
+	@Test
+	void shouldFailToGetSearchResults() throws Exception {
+		this.mockMvc
+			.perform(get("/doSearch")
+				.param("searchString", ""))
+			.andExpect(model().attributeExists("error"))
+			.andExpect(view().name("error"));
+	}
+
+}	
