@@ -85,9 +85,11 @@ public class PetitionsController {
     @GetMapping("/doSearch")
     public String doSearch(
             @RequestParam(value = "searchString", required = false) String searchString,
-            Model model) {
+            Model model,
+            HttpServletResponse response) {
 
         if (searchString.isEmpty() || searchString == null) {
+            response.setStatus(400);
             model.addAttribute("error", "A search term was not provided");
             return "error";
         }
@@ -103,10 +105,12 @@ public class PetitionsController {
             @RequestParam(value = "id", required = true) Integer id,
             @RequestParam(value = "email", required = true) String email,
             @RequestParam(value = "name", required = true) String name,
-            Model model) {
+            Model model,
+            HttpServletResponse response) {
 
         if (email.isEmpty() || email == null ||
                 name.isEmpty() || name == null) {
+            response.setStatus(400);
             model.addAttribute("error", "Name and email are required to sign");
             return "error";
         }
