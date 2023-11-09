@@ -1,10 +1,9 @@
 package org.ruairispetitions;
 
 import org.junit.jupiter.api.Test;
-import org.ruairispetitions.controller.PetitionsController;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@WebMvcTest(PetitionsController.class)
+@SpringBootTest
 class RuairispetitionsApplicationTests {
 
 	@Test
