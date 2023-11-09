@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,6 +34,9 @@ class RuairispetitionsApplicationTests {
 
 	@MockBean
 	PetitionRepository petitionRepository;
+
+	@MockBean 
+	Petition petition;
 
 	@Autowired
 	ObjectMapper objectMapper;
@@ -75,4 +79,35 @@ class RuairispetitionsApplicationTests {
 			.perform(get("/view/100"))
 			.andExpect(status().isNotFound());
 	}
+
+	// ============ Tests for create feature ===============
+	@Test
+	void shouldGetCreatePage() throws Exception {
+		this.mockMvc
+				.perform(get("/create"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("createForm"))
+				.andExpect(model().attributeExists("petition"));
+	}
+
+	@Test
+	void shouldCreateNewPetition() throws Exception {
+		this.mockMvc
+		 	.perform(post("/create")
+		 		.param("title", "Test Title")
+				.param("description", "Test Description"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("createSuccess"));
+	}
+
+	@Test
+	void shouldFailToCreateNewPetition() throws Exception {
+		this.mockMvc
+		 	.perform(post("/create")
+		 		.param("title", "")
+				.param("description", "Test Description"))
+			.andExpect(status().isBadRequest())
+			.andExpect(view().name("error"));
+	}
+
 }
