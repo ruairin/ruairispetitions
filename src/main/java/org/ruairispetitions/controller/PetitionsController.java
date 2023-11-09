@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.ui.Model;
 
 @Controller
@@ -54,11 +57,13 @@ public class PetitionsController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("petition") Petition petition, Model model) {
+    public String create(@ModelAttribute("petition") Petition petition, Model model, HttpServletResponse response) {
 
         // Check for blank title/description
         if (petition.getTitle() == null || petition.getTitle().isEmpty()
                 || petition.getDescription() == null || petition.getDescription().isEmpty()) {
+
+            response.setStatus(400);
             model.addAttribute("error", "Please specify a title and description for the petition");
             return "error";
         }
