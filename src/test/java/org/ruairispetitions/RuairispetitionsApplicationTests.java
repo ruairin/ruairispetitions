@@ -41,6 +41,7 @@ class RuairispetitionsApplicationTests {
 	void contextLoads() {
 	}
 
+	// ============ Tests for viewall feature ===============
 	@Test
 	void shouldShowAllPetitions() throws Exception {
 		this.mockMvc
@@ -50,4 +51,28 @@ class RuairispetitionsApplicationTests {
 				.andExpect(model().attributeExists("petitions"));
 	}
 
+	// ============ Tests for vieOne feature ===============
+	@Test
+	void shouldShowOnePetition() throws Exception{
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+		Optional<Petition> petition = Optional.of(new Petition(1, "Petition 1", "Description 1", now.format(formatter), "John Joe"));
+		Mockito.when(petitionRepository.findById(1)).thenReturn(petition);
+
+		this.mockMvc
+			.perform(get("/view/1"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("viewOne"))
+			.andExpect(model().attributeExists("petition"));
+	}
+
+	@Test
+	void shouldFailToShowOnePetition() throws Exception{
+		Optional<Petition> petition = Optional.empty();
+		Mockito.when(petitionRepository.findById(100)).thenReturn(petition);
+
+		this.mockMvc
+			.perform(get("/view/100"))
+			.andExpect(status().isNotFound());
+	}
 }
