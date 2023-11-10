@@ -26,7 +26,7 @@
                     <th>View/Sign</th>
                 </tr>
                 <tr th:each="petition, iter: ${petitions}">
-                    <td th:text="${iter.index}" />
+                    <td th:text="${iter.index+1}" />
                     <td th:text="${petition.title}" />
                     <td th:text="${petition.date}" />
                     <td>
