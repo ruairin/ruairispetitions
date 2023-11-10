@@ -1,11 +1,6 @@
 package org.ruairispetitions.model;
 
-import java.time.LocalDateTime;
-// import java.util.List;
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class Petition {
 
