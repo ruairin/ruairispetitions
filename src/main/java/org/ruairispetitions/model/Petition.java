@@ -25,7 +25,7 @@ public class Petition {
         this.title = null;
         this.description = null;
         this.date = null;
-        this.signatures = null;
+        this.signatures = new String();
     }
 
     public Petition(Integer id, String title,
@@ -78,7 +78,10 @@ public class Petition {
     }
 
     public void appendSignatures(String signatures) {
-        this.signatures = this.signatures + ", " + signatures;
+        if (!this.signatures.isEmpty()) {
+            this.signatures = this.signatures + ", ";
+        }
+        this.signatures = this.signatures + signatures;
     }
 
 }
