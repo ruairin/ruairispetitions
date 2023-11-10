@@ -1,16 +1,24 @@
+/**
+ * The data model for the petitions application
+ * 
+ * @author ruairin
+ *
+ */
+
 package org.ruairispetitions.model;
 
 import org.springframework.data.annotation.Id;
 
 public class Petition {
 
-    @Id 
+    // @id annotation is required for Spring Data
+    // as the key for the records
+    @Id
     private Integer id;
     private String title;
     private String description;
     private String date;
     private String signatures;
-    
 
     public Petition() {
         this.id = null;
@@ -20,7 +28,8 @@ public class Petition {
         this.signatures = null;
     }
 
-    public Petition(Integer id, String title, String description, String date, String signatures) {
+    public Petition(Integer id, String title,
+            String description, String date, String signatures) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -71,6 +80,5 @@ public class Petition {
     public void appendSignatures(String signatures) {
         this.signatures = this.signatures + ", " + signatures;
     }
-
 
 }

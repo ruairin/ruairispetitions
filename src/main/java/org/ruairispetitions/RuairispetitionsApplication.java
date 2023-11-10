@@ -1,3 +1,10 @@
+/**
+ * The main SpringBootApplication for the petitions application
+ * 
+ * @author ruairin
+ *
+ */
+
 package org.ruairispetitions;
 
 import org.springframework.boot.SpringApplication;
