@@ -28,13 +28,18 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>Created</th>
-                    <th>Signatures</th>
+                    <!-- <th>Signatures</th> -->
                 </tr>
                 <tr>
                     <td th:text="${petition.title}" />
                     <td th:text="${petition.description}" />
                     <td th:text="${#temporals.format(petition.date, 'dd-MM-yyyy HH:mm')}" />
-                    <td th:text="${petition.signatures}" />
+                </tr>
+                <tr>
+                    <td>
+                        <b>Signatures</b>
+                    </td>
+                    <td colspan="2" th:text="${petition.signatures}" />
                 </tr>
             </table>
         </div>
