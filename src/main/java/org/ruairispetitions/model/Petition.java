@@ -7,6 +7,8 @@
 
 package org.ruairispetitions.model;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 
 public class Petition {
@@ -17,7 +19,7 @@ public class Petition {
     private Integer id;
     private String title;
     private String description;
-    private String date;
+    private LocalDateTime date;
     private String signatures;
 
     public Petition() {
@@ -29,7 +31,7 @@ public class Petition {
     }
 
     public Petition(Integer id, String title,
-            String description, String date, String signatures) {
+            String description, LocalDateTime date, String signatures) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -61,11 +63,11 @@ public class Petition {
         this.description = description;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return this.date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

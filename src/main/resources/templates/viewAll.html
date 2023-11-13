@@ -22,13 +22,13 @@
                 <tr>
                     <th>Petition No.</th>
                     <th>Title</th>
-                    <th>Date</th>
+                    <th>Created</th>
                     <th>View/Sign</th>
                 </tr>
                 <tr th:each="petition, iter: ${petitions}">
                     <td th:text="${iter.index+1}" />
                     <td th:text="${petition.title}" />
-                    <td th:text="${petition.date}" />
+                    <td th:text="${#temporals.format(petition.date, 'dd-MM-yyyy HH:mm')}" />
                     <td>
                         <a class="btn btn-primary btn-sm" th:href="@{/view/{id}(id=${petition.id})}">
                             View & Sign

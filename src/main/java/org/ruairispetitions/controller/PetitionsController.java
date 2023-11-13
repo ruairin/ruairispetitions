@@ -16,7 +16,6 @@
 package org.ruairispetitions.controller;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.ruairispetitions.model.Petition;
@@ -138,9 +137,9 @@ public class PetitionsController {
 
         // Add the current time/date to the petition bean before saving
         // to the repository
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime now = LocalDateTime.now();
-        petition.setDate(now.format(formatter));
+        petition.setDate(now);
 
         repository.save(petition);
 

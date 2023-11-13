@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS Petition (
     id SERIAL PRIMARY KEY ,
     title varchar(255) NOT NULL,
     description TEXT,
-    date DATETIME NOT NULL,
+    date TIMESTAMP NOT NULL,
     signatures TEXT
 );
 

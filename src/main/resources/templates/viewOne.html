@@ -27,13 +27,13 @@
                 <tr>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Date Created</th>
+                    <th>Created</th>
                     <th>Signatures</th>
                 </tr>
                 <tr>
                     <td th:text="${petition.title}" />
                     <td th:text="${petition.description}" />
-                    <td th:text="${petition.date}" />
+                    <td th:text="${#temporals.format(petition.date, 'dd-MM-yyyy HH:mm')}" />
                     <td th:text="${petition.signatures}" />
                 </tr>
             </table>

@@ -20,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @WebMvcTest(PetitionsController.class)
@@ -51,9 +50,8 @@ class PetitionsControllerTests {
 	// ============ Tests for vieOne feature ===============
 	@Test
 	void shouldShowOnePetition() throws Exception{
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime now = LocalDateTime.now();
-		Optional<Petition> petition = Optional.of(new Petition(1, "Petition 1", "Description 1", now.format(formatter), "John Joe"));
+		Optional<Petition> petition = Optional.of(new Petition(1, "Petition 1", "Description 1", now, "John Joe"));
 		Mockito.when(petitionRepository.findById(1)).thenReturn(petition);
 
 		this.mockMvc
@@ -135,9 +133,8 @@ class PetitionsControllerTests {
 	// ============ Tests for sign feature ===============
 	@Test
 	void shouldSignPetition() throws Exception {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime now = LocalDateTime.now();
-		Optional<Petition> petition = Optional.of(new Petition(1, "Petition 1", "Description 1", now.format(formatter), "John Joe"));
+		Optional<Petition> petition = Optional.of(new Petition(1, "Petition 1", "Description 1", now, "John Joe"));
 		Mockito.when(petitionRepository.findById(1)).thenReturn(petition);
 
 		this.mockMvc
