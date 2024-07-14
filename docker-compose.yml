@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+
+  petitions:
+    build:
+      # Get image details from Dockerfile in ./
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '9090:8080'
+    networks:
+      - nginx-net
+
+networks:
+  # connect to network created in a separate
+  # nginix container
+  nginx-net:
+    external: true
